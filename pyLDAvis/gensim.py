@@ -20,11 +20,11 @@ def _extract_data(topic_model, corpus, dictionary, doc_topic_dists=None):
    else:
       corpus_csc = corpus
    
-   vocab = list(dictionary.token2id.keys())
+   vocab = list(dictionary.keys())
    # TODO: add the hyperparam to smooth it out? no beta in online LDA impl.. hmm..
    # for now, I'll just make sure we don't ever get zeros...
    beta = 0.01
-   fnames_argsort = np.asarray(list(dictionary.token2id.values()), dtype=np.int_)
+   fnames_argsort = np.asarray(list(dictionary.values()), dtype=np.int_)
    term_freqs = corpus_csc.sum(axis=1).A.ravel()[fnames_argsort]
    term_freqs[term_freqs == 0] = beta
    doc_lengths = corpus_csc.sum(axis=0).A.ravel()
